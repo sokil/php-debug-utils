@@ -1,0 +1,12 @@
+#!/usr/bin/env bash
+
+# Debug when code executed on remote server, and PHP runtime needs to connect to IDE on local machine, and
+# remote server can not connect to local IDE directly
+
+# We need to forward remote port to local port, accessible by IDE
+# ssh -fN some-ssh-host -R 9000:127.0.0.1:9000
+
+export PHP_XDEBUG_ENABLED=1
+export PHP_IDE_CONFIG="serverName=console"
+export XDEBUG_CONFIG="idekey=PHPSTORM remote_host=127.0.0.1 remote_port=9000 remote_enable=1 remote_autostart=1"
+php $@

@@ -1,0 +1,28 @@
+#!/usr/bin/env bash
+
+if [ -z $1 ] || [ -z $2 ]; then
+    echo "Useage: flameGraph flameGraphFile phpFile [phpArgument ...]"
+fi
+
+if [[ -e $1 ]]; then
+    while true; do
+        read -p "Flame graph file already exists, do you wart to overwrite it? (y/n): " yn
+        case $yn in
+            [Yy]* ) break;;
+            [Nn]* ) exit;;
+            * ) echo "Please answer yes or no.";;
+        esac
+    done
+fi
+
+echo Running script "${@:2}"
+
+php \
+    -d xdebug.auto_trace=1 \
+    -d xdebug.trace_format=1 \
+    -d xdebug.trace_output_dir=/tmp \
+    -d xdebug.trace_output_name=php-frameGraph-trace.in \
+    ${@:2}
+
+../FlameGraph/stackcollapse-xdebug.php /tmp/php-frameGraph-trace.in.xt > /tmp/php-frameGraph-trace.out
+../FlameGraph/flamegraph.pl /tmp/php-frameGraph-trace.out > $1
