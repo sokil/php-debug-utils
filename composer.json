@@ -1,0 +1,19 @@
+{
+    "name": "sokil/php-debug-utils",
+    "description": "Debug utils",
+    "type": "library",
+    "require": {
+        "ext-xdebug": "*"
+    },
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Dmytro Sokil",
+            "email": "dmytro.sokil@gmail.com"
+        }
+    ],
+    "bin": [
+        "bin/flameGraph",
+        "bin/debugRemote"
+    ]
+}
